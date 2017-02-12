@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Gaswerk.RouteApp.Models.Route>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">Route Nr.</div>
+        <div class="col-3">Name</div>
+        <div class="col-3">Bewertung Routenbauer</div>
+        <div class="col-4">Anzahl Kundenbewertungen</div>
+    </div>
+    @foreach (var m in Model.OrderBy(r => r.Name))
+    {
+        <div class="row">
+            <div class="col-2">
+                @m.Id
+            </div>
+            <div class="col-3">
+                @m.Name
+            </div>
+            <div class="col-3">
+                @(m.RoutenBauerBewertung?.Schwierigkeit.ToString())
+            </div>
+            <div class="col-4">
+                @(m.KundenBewertungen?.Count() ?? 0) &nbsp;
+                @Html.ActionLink("Jetzt bewerten",
+                                 "Bewerten", 
+                                 "Route", 
+                                 new {id=m.Id}, 
+                                 new {@class = "btn btn-sm btn-success"}
+                     )
+            </div>
+        </div>
+    }
+</div>

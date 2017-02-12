@@ -1,0 +1,16 @@
+﻿@using Gaswerk.RouteApp.Code
+@model Gaswerk.RouteApp.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm())
+{
+    @Html.MyValidationSummary();
+    <label>Id:</label>
+    @Html.TextBoxFor(m => m.Id)
+    <input type="submit" class="btn btn-success" value="login" />
+}

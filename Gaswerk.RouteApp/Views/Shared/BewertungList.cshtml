@@ -1,0 +1,32 @@
+﻿@using Gaswerk.RouteApp.Code
+@model Gaswerk.RouteApp.Models.Route
+
+    <h3>Route: @Model.Name (Nr.@Model.Id)</h3>
+    <div class="row text-info">
+        
+        <div class="col-2">
+            Schwierigkeit
+        </div>
+        <div class="col-3">
+            Schönheit
+        </div>
+        <div class="col-3">
+            Kommentar
+        </div>
+        <div class="col-4">
+            Kunde
+        </div>
+    </div>
+    @if (Model.RoutenBauerBewertung != null)
+    {
+        <h5 class="text-info">Bewertung des Routenbauers</h5>
+        @Html.Partial("SingleBewertung", Tuple.Create(Model.RoutenBauerBewertung, true))
+    }
+    @if (Model.KundenBewertungen != null && Model.KundenBewertungen.Any())
+    {
+        <h5 class="text-info">Bisherige Bewertungen von Kunden </h5>
+        foreach (var kundenBewertung in Model.KundenBewertungen)
+         {
+             @Html.Partial("SingleBewertung", Tuple.Create(kundenBewertung, true))
+        }
+    }

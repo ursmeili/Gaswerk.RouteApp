@@ -1,0 +1,37 @@
+﻿@using System.Activities.Statements
+@using Gaswerk.RouteApp.Code
+@model Gaswerk.RouteApp.Models.Route[]
+@{
+    var kunde = this.CurrentKunde();
+   
+}
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/_Layout.cshtml";
+    
+}
+<div class="container">
+    <div class="row">
+        <div class="col-2 rounded">
+            <h3>Kunde</h3>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col-2">Id:</div>
+                <div class="col">@kunde.Id</div>
+            </div>
+            <div class="row">
+                <div class="col-2">Name:</div>
+                <div class="col">@kunde.Name</div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px">
+        <div class="col-2 rounded">
+            <h3>Routen</h3>
+        </div>
+        <div class="col">
+            @Html.Partial("RouteList", Model)
+        </div>
+    </div>
+</div>
