@@ -97,21 +97,40 @@ namespace Gaswerk.RouteApp.Logic.Repositories
         }
 
         /// <inheritdoc />
-        public void AddBewertung(Route route, Bewertung bewertung)
+        public void AddOrChangeBewertung(Route route, Bewertung bewertung)
         {
             if (route == null) throw new ArgumentNullException(nameof(route));
             if (bewertung == null) throw new ArgumentNullException(nameof(bewertung));
 
             if (((bewertung.Kunde?.Id) ?? 0)==0) throw new InvalidOperationException("Kein Kunde zugeordnet.");
 
-
-            if (route.KundenBewertungen!=null && route.KundenBewertungen.Any(b => b.Kunde?.Id == bewertung.Kunde?.Id))
+            var existingBewertung = route.KundenBewertungen?.FirstOrDefault(b => bewertung.Kunde != null && b.Kunde?.Id == bewertung.Kunde?.Id);
+            if (existingBewertung != null)
             {
-                throw new InvalidOperationException("Kunde hat die Route bereits bewertet.");
+                existingBewertung.Kommentar = bewertung.Kommentar;
+                existingBewertung.Schwierigkeit = bewertung.Schwierigkeit;
+                existingBewertung.Schönheit = bewertung.Schönheit;
             }
-            if(route.KundenBewertungen==null)
-                route.KundenBewertungen=new List<Bewertung>();
-            route.KundenBewertungen.Add(bewertung);
+            else
+            {
+                if (route.KundenBewertungen == null)
+                    route.KundenBewertungen = new List<Bewertung>();
+                route.KundenBewertungen.Add(bewertung);
+            }
+        }
+
+        /// <inheritdoc />
+        public void DeleteBewertung(int routeId, int kundeId)
+        {
+            if (kundeId <= 0) throw new ArgumentOutOfRangeException(nameof(kundeId));
+            if (routeId <= 0) throw new ArgumentOutOfRangeException(nameof(routeId));
+
+            var route = this.Get(routeId);
+            var bewertung = route.KundenBewertungen?.FirstOrDefault(b => b.Kunde?.Id == kundeId);
+            if (bewertung != null)
+            {
+                route.KundenBewertungen?.Remove(bewertung);
+            }
         }
     }
 

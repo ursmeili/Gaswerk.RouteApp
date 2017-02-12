@@ -1,46 +1,58 @@
 ﻿@using Gaswerk.RouteApp.Code
-@model Tuple<Gaswerk.RouteApp.Models.Bewertung, bool>
+@using Gaswerk.RouteApp.Models
+@model Tuple<Gaswerk.RouteApp.Models.Bewertung, bool, bool, int>
 @{
     var bewertung = Model.Item1;
     var isReadOnly = Model.Item2;
+    var isNew = Model.Item3;
+    var routeId = Model.Item4;
 }
+@using (Html.BeginForm("Bewerten", "Route", new { id = routeId }))
+{
+    <div class="row">
 
-<div class="row">
-    
-    <div class="col-2">
-        @if (isReadOnly)
-        {
-            @bewertung.Schwierigkeit.ToString()
-        }
-        else
-        {
-            @Html.MySchwierigkeitsgradDropDown(m=> bewertung.Schwierigkeit);
-        }
-    </div>
-    <div class="col-3">
-        @if (isReadOnly)
-        {
-            if (bewertung.Schönheit > 0)
+        <div class="col-2">
+            @if (isReadOnly)
             {
-                @: @bewertung.Schönheit
+                @bewertung.Schwierigkeit.ToString()
             }
+            else
+            {
+                @Html.MySchwierigkeitsgradDropDown(m => bewertung.Schwierigkeit)
+            }
+        </div>
+        <div class="col-3">
+            @if (isReadOnly)
+            {
+                if (bewertung.Schönheit > 0)
+                {
+                    @: @bewertung.Schönheit
+            }
+            }
+            else
+            {
+                @Html.TextBoxFor(b => bewertung.Schönheit, new { @class = "form-control" })
+            }
+        </div>
+        <div class="col-3">
+            @if (isReadOnly)
+            {
+                @: @bewertung.Kommentar
         }
-        else
-        {
-            @Html.TextBoxFor(b => bewertung.Schönheit, new { @class = "form-control" })
-        }
-    </div>
-    <div class="col-3">
-        @if (isReadOnly)
-        {
-            @: @bewertung.Kommentar
-        }
-        else
-        {
-            @Html.TextBoxFor(b => bewertung.Kommentar, new { @class = "form-control" })
-        }
-    </div>
-    <div class="col-4">
-        @(bewertung.Kunde?.Name ?? "")
-    </div>
+            else
+            {
+                @Html.TextBoxFor(b => bewertung.Kommentar, new { @class = "form-control" })
+            }
+        </div>
+        <div class="col-4">
+            @if (!isReadOnly)
+            {
+                <input type="submit" value="@(isNew ? "Bewerten" : "Bewertung ändern") " class="btn btn-success" />
+                if (!isNew)
+                {
+                    @Html.ActionLink("Bewertung löschen", "DeleteBewertung","Route", new {id = routeId}, new {@class = "btn btn-danger"});
+                }
+}
 </div>
+</div>
+}

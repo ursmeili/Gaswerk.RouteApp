@@ -34,7 +34,7 @@ namespace Gaswerk.RouteApp
                 Schwierigkeit s=Schwierigkeit.Parse(value.AttemptedValue);
                 return s;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 bindingContext.ModelState.AddModelError(bindingContext.ModelName, "invalid Schwierigkeit");
                 return null;

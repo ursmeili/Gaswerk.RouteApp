@@ -16,7 +16,8 @@ namespace Gaswerk.RouteApp.Interfaces.Repositories
         [NotNull]
         Route Get(int idRoute);
 
-        void AddBewertung([NotNull] Route route, [NotNull] Bewertung bewertung);
+        void AddOrChangeBewertung([NotNull] Route route, [NotNull] Bewertung bewertung);
+        void DeleteBewertung(int routeId, int kundeId);
     }
 
 }

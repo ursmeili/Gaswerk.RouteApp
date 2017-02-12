@@ -30,6 +30,23 @@ namespace Gaswerk.RouteApp.Controllers
             return View("Bewerten", Tuple.Create(route, (Bewertung)null));
         }
 
+        /// <summary>
+        /// Deletes a bewertung 
+        /// </summary>
+        /// <param name="id">id der Route</param>
+        /// <returns></returns>
+        public ActionResult DeleteBewertung(int id)
+        {
+            _RouteRepository.DeleteBewertung(id, this.CurrentKunde().Id);
+            return GoToHome();
+        }
+
+        /// <summary>
+        /// Adds or changes a bewertung
+        /// </summary>
+        /// <param name="id">id der Route</param>
+        /// <param name="bewertung"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Bewerten(int id, Bewertung bewertung)
         {
@@ -41,10 +58,16 @@ namespace Gaswerk.RouteApp.Controllers
             else
             {
                 bewertung.Kunde = this.CurrentKunde();
-                _RouteRepository.AddBewertung(route, bewertung);
-                return RedirectToAction("MainMenu", "Home");
+                _RouteRepository.AddOrChangeBewertung(route, bewertung);
+                return GoToHome();
             }
         }
+
+        public ActionResult GoToHome()
+        {
+            return this.RedirectToAction("MainMenu", "Home");
+        }
+
     }
 
 }
