@@ -47,14 +47,10 @@
         <div class="col-4">
             @if (!isReadOnly)
             {
-                <input type="submit"
-                       value="@(isNew ? "Bewerten" : "Bewertung ändern") "
-                       class="btn btn-success" />
+                @Html.SubmitButton(ButtonType.Success, (isNew ? "Bewerten" : "Bewertung ändern"))
                 if (!isNew)
                 {
-                    @Html.ActionLink("Bewertung löschen", "DeleteBewertung", "Route",
-                        new { id = routeId },
-                        new { @class = "btn btn-danger" });
+                    @Html.LinkButton(ButtonType.Danger,  "Bewertung löschen", "DeleteBewertung", "Route",routeId)
                 }
             }
         </div>

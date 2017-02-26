@@ -23,7 +23,7 @@
     @if (Model.RoutenBauerBewertung != null)
     {
         <h5 class="text-info">Bewertung des Routenbauers</h5>
-        @Html.Partial("SingleBewertung", Tuple.Create(Model.RoutenBauerBewertung, true,false,Model.Id))
+        @Html.Partial("_SingleBewertungPartial", Tuple.Create(Model.RoutenBauerBewertung, true,false,Model.Id))
     }
     @if (Model.KundenBewertungen != null && Model.KundenBewertungen.Any())
     {
@@ -31,6 +31,6 @@
         foreach (var kundenBewertung in Model.KundenBewertungen)
         {
             var isReadOnly = kundenBewertung?.Kunde?.Id != kunde.Id;
-             @Html.Partial("SingleBewertung", Tuple.Create(kundenBewertung, isReadOnly,false, Model.Id))
+             @Html.Partial("_SingleBewertungPartial", Tuple.Create(kundenBewertung, isReadOnly,false, Model.Id))
          }
     }

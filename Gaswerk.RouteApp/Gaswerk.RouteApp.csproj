@@ -129,7 +129,7 @@
     <Content Include="Views\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\MainMenu.cshtml" />
-    <Content Include="Views\Shared\RouteList.cshtml" />
+    <Content Include="Views\Shared\_RouteListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -148,8 +148,8 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Route\BewertungsListe.cshtml" />
-    <Content Include="Views\Shared\BewertungList.cshtml" />
-    <Content Include="Views\Shared\SingleBewertung.cshtml" />
+    <Content Include="Views\Shared\_BewertungListPartial.cshtml" />
+    <Content Include="Views\Shared\_SingleBewertungPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
