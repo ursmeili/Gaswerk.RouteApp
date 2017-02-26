@@ -150,6 +150,7 @@
     <Content Include="Views\Route\BewertungsListe.cshtml" />
     <Content Include="Views\Shared\_BewertungListPartial.cshtml" />
     <Content Include="Views\Shared\_SingleBewertungPartial.cshtml" />
+    <Content Include="Views\Route\GetBewertungListData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

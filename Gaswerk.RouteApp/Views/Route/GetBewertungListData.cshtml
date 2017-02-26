@@ -1,19 +1,14 @@
 ﻿@using Gaswerk.RouteApp.Code
 @using Gaswerk.RouteApp.Models
 @model Tuple<Gaswerk.RouteApp.Models.Route, Bewertung>
-
 @{
     var kunde = this.CurrentKunde();
     var route = Model.Item1;
     var bewertung = Model.Item2 ?? new Bewertung { Kunde = kunde, Schwierigkeit = route.RoutenBauerBewertung?.Schwierigkeit };
 }
-@{
-    ViewBag.Title = "Route Bewerten";
-    Layout = "~/Views/_Layout.cshtml";
+@Html.Partial("_BewertungListPartial", route)
+@if (!route.BereitsBewertet(kunde))
+{
+    <h5 class="text-danger">Deine Bewertung</h5>
+    @Html.Partial("_SingleBewertungPartial", Tuple.Create(bewertung, false, true, route.Id))
 }
-<div class="container">
-    @Html.Action("GetBewertungListData",new{routeId=route.Id, bewertung=bewertung})
-    
-
-    @Html.LinkButton(ButtonType.Info, "Zurück", "GoToHome")
-</div>

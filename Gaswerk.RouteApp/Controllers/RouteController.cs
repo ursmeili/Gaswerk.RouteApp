@@ -73,6 +73,11 @@ namespace Gaswerk.RouteApp.Controllers
             return this.RedirectToAction("MainMenu", "Home");
         }
 
+        public PartialViewResult GetBewertungListData(int routeId, Bewertung bewertung)
+        {
+            var route = _RouteRepository.Get(routeId);
+            return PartialView(Tuple.Create( route, bewertung));
+        }
     }
 
 }
