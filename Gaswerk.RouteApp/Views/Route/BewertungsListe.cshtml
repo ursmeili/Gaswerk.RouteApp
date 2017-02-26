@@ -17,10 +17,6 @@
     @if (!route.BereitsBewertet(kunde))
     {
         <h5 class="text-danger">Deine Bewertung</h5>
-        using (Html.BeginForm(new { id = route.Id }))
-        {
-            @Html.MyValidationSummary()
-            @Html.Partial("SingleBewertung", Tuple.Create(bewertung, false,true,route.Id))
-        }
+        @Html.Partial("SingleBewertung", Tuple.Create(bewertung, false, true, route.Id))
     }
 </div>

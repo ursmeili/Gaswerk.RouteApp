@@ -24,10 +24,15 @@ namespace Gaswerk.RouteApp.Controllers
             _RouteRepository = routeRepository ?? throw new ArgumentNullException(nameof(routeRepository));
         }
 
-        public ActionResult Bewerten(int id)
+        /// <summary>
+        /// Zeigt eine Liste der Bewertungen für Route <paramref name="id"/> an.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult BewertungsListe(int id)
         {
             var route = _RouteRepository.Get(id);
-            return View("Bewerten", Tuple.Create(route, (Bewertung)null));
+            return View("BewertungsListe",Tuple.Create(route, (Bewertung)null));
         }
 
         /// <summary>
@@ -42,7 +47,7 @@ namespace Gaswerk.RouteApp.Controllers
         }
 
         /// <summary>
-        /// Adds or changes a bewertung
+        /// Löscht oder Ändert eine Bewertung für Route <paramref name="id"/>
         /// </summary>
         /// <param name="id">id der Route</param>
         /// <param name="bewertung"></param>
@@ -53,13 +58,13 @@ namespace Gaswerk.RouteApp.Controllers
             var route = _RouteRepository.Get(id);
             if (!ModelState.IsValid)
             {
-                return View(Tuple.Create(route, bewertung));
+                return View("BewertungsListe", Tuple.Create(route, bewertung));
             }
             else
             {
                 bewertung.Kunde = this.CurrentKunde();
                 _RouteRepository.AddOrChangeBewertung(route, bewertung);
-                return GoToHome();
+                return BewertungsListe(id);
             }
         }
 

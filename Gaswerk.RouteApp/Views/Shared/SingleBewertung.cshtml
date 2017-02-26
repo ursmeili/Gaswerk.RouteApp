@@ -27,7 +27,7 @@
                 if (bewertung.Schönheit > 0)
                 {
                     @: @bewertung.Schönheit
-            }
+                }
             }
             else
             {
@@ -38,7 +38,7 @@
             @if (isReadOnly)
             {
                 @: @bewertung.Kommentar
-        }
+            }
             else
             {
                 @Html.TextBoxFor(b => bewertung.Kommentar, new { @class = "form-control" })
@@ -47,12 +47,16 @@
         <div class="col-4">
             @if (!isReadOnly)
             {
-                <input type="submit" value="@(isNew ? "Bewerten" : "Bewertung ändern") " class="btn btn-success" />
+                <input type="submit"
+                       value="@(isNew ? "Bewerten" : "Bewertung ändern") "
+                       class="btn btn-success" />
                 if (!isNew)
                 {
-                    @Html.ActionLink("Bewertung löschen", "DeleteBewertung","Route", new {id = routeId}, new {@class = "btn btn-danger"});
+                    @Html.ActionLink("Bewertung löschen", "DeleteBewertung", "Route",
+                        new { id = routeId },
+                        new { @class = "btn btn-danger" });
                 }
-}
-</div>
-</div>
+            }
+        </div>
+    </div>
 }

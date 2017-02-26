@@ -147,7 +147,7 @@
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Route\Bewerten.cshtml" />
+    <Content Include="Views\Route\BewertungsListe.cshtml" />
     <Content Include="Views\Shared\BewertungList.cshtml" />
     <Content Include="Views\Shared\SingleBewertung.cshtml" />
     <None Include="Web.Debug.config">
