@@ -67,7 +67,7 @@ namespace Gaswerk.RouteApp.Code
             b.MergeAttribute("value", text);
             b.MergeAttributes<string, object>(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
 
-            var s = new MvcHtmlString(b.ToString(TagRenderMode.Normal));
+            var s = new MvcHtmlString(b.ToString(TagRenderMode.SelfClosing));
             return s;
         }
 

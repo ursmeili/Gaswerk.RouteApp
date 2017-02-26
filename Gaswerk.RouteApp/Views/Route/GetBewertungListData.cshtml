@@ -1,14 +1,18 @@
 ﻿@using Gaswerk.RouteApp.Code
 @using Gaswerk.RouteApp.Models
-@model Tuple<Gaswerk.RouteApp.Models.Route, Bewertung>
-@{
-    var kunde = this.CurrentKunde();
-    var route = Model.Item1;
-    var bewertung = Model.Item2 ?? new Bewertung { Kunde = kunde, Schwierigkeit = route.RoutenBauerBewertung?.Schwierigkeit };
+@model Tuple<Gaswerk.RouteApp.Models.Route,Bewertung>
+    @{
+        var kunde = this.CurrentKunde();
+        var route = Model.Item1;
+        var pendingBewertung = Model.Item2; // existierende Bewertung. Ist nur nicht null, wenn ein Validierungsfehler vorliegt!
 }
 @Html.Partial("_BewertungListPartial", route)
 @if (!route.BereitsBewertet(kunde))
 {
     <h5 class="text-danger">Deine Bewertung</h5>
-    @Html.Partial("_SingleBewertungPartial", Tuple.Create(bewertung, false, true, route.Id))
+    @Html.Partial("_SingleBewertungPartial", Tuple.Create(
+            pendingBewertung ?? new Bewertung { Kunde = kunde, Schwierigkeit = route.RoutenBauerBewertung?.Schwierigkeit }, 
+            false, 
+            true, 
+            route.Id))
 }

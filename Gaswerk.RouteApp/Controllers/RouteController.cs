@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace Gaswerk.RouteApp.Controllers
 {
-
+    [Authorize]
     public class RouteController : Controller
     {
         [NotNull]
@@ -32,7 +32,7 @@ namespace Gaswerk.RouteApp.Controllers
         public ActionResult BewertungsListe(int id)
         {
             var route = _RouteRepository.Get(id);
-            return View("BewertungsListe",Tuple.Create(route, (Bewertung)null));
+            return View("BewertungsListe",route);
         }
 
         /// <summary>
@@ -58,13 +58,14 @@ namespace Gaswerk.RouteApp.Controllers
             var route = _RouteRepository.Get(id);
             if (!ModelState.IsValid)
             {
-                return View("BewertungsListe", Tuple.Create(route, bewertung));
+                return GetBewertungListData(id, pendingBewertung: bewertung);
             }
             else
             {
                 bewertung.Kunde = this.CurrentKunde();
                 _RouteRepository.AddOrChangeBewertung(route, bewertung);
-                return BewertungsListe(id);
+
+                return GetBewertungListData(id, null);
             }
         }
 
@@ -73,10 +74,10 @@ namespace Gaswerk.RouteApp.Controllers
             return this.RedirectToAction("MainMenu", "Home");
         }
 
-        public PartialViewResult GetBewertungListData(int routeId, Bewertung bewertung)
+        public PartialViewResult GetBewertungListData(int routeId, [CanBeNull] Bewertung pendingBewertung)
         {
             var route = _RouteRepository.Get(routeId);
-            return PartialView(Tuple.Create( route, bewertung));
+            return PartialView("GetBewertungListData",Tuple.Create(route, pendingBewertung));
         }
     }
 

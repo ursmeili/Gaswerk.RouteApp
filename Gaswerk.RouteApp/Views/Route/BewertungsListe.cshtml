@@ -1,19 +1,12 @@
 ﻿@using Gaswerk.RouteApp.Code
 @using Gaswerk.RouteApp.Models
-@model Tuple<Gaswerk.RouteApp.Models.Route, Bewertung>
-
-@{
-    var kunde = this.CurrentKunde();
-    var route = Model.Item1;
-    var bewertung = Model.Item2 ?? new Bewertung { Kunde = kunde, Schwierigkeit = route.RoutenBauerBewertung?.Schwierigkeit };
-}
+@model Gaswerk.RouteApp.Models.Route
 @{
     ViewBag.Title = "Route Bewerten";
     Layout = "~/Views/_Layout.cshtml";
 }
-<div class="container">
-    @Html.Action("GetBewertungListData",new{routeId=route.Id, bewertung=bewertung})
-    
-
-    @Html.LinkButton(ButtonType.Info, "Zurück", "GoToHome")
+<div class="container" id="ajax-form-target-bewertungsliste">
+    @Html.Action("GetBewertungListData",
+                  new { routeId = Model.Id, pendingBewertung = (Bewertung)null })
 </div>
+@Html.LinkButton(ButtonType.Info, "Zurück", "GoToHome")

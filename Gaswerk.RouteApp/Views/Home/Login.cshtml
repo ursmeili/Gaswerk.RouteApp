@@ -11,6 +11,8 @@
 {
     @Html.MyValidationSummary()
     <label>Id:</label>
-    @Html.TextBoxFor(m => m.Id)
+    @Html.TextBoxFor(m => m.Id, new { @class = "form-control" })
+    <label>Passrot:</label>
+    @Html.TextBoxFor(m => m.Passwort, new { @class = "form-control" })
     @Html.SubmitButton(ButtonType.Success, "login")
 }

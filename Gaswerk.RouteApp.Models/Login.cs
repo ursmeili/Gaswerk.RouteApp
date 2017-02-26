@@ -10,8 +10,8 @@ namespace Gaswerk.RouteApp.Models
     {
         [Required]
         public int? Id { get; set; }
-
-       
+        [Required]
+        public string Passwort { get; set; }
     }
 
 }

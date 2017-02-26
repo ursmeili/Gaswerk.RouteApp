@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 
+using Gaswerk.RouteApp.Interfaces.Authorization;
 using Gaswerk.RouteApp.Interfaces.Repositories;
+using Gaswerk.RouteApp.Logic.Authorization;
 using Gaswerk.RouteApp.Logic.Repositories;
 using Gaswerk.RouteApp.Models;
 
@@ -27,6 +29,7 @@ namespace Gaswerk.RouteApp.Logic
         {
             _Kernel.Bind<IKundeRepository>().To<KundeRepository>().InSingletonScope();
             _Kernel.Bind<IRouteRepository>().To<RouteRepository>().InSingletonScope();
+            _Kernel.Bind<IAuthorizationProvider>().To<AuthorizationProvider>().InSingletonScope();
         }
 
         public static T Get<T>()

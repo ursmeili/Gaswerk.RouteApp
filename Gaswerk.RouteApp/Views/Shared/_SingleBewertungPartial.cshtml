@@ -7,52 +7,52 @@
     var isNew = Model.Item3;
     var routeId = Model.Item4;
 }
-@using (Html.BeginForm("Bewerten", "Route", new { id = routeId }))
+
+@if (isReadOnly)
 {
     <div class="row">
-
         <div class="col-2">
-            @if (isReadOnly)
-            {
-                @bewertung.Schwierigkeit.ToString()
-            }
-            else
-            {
-                @Html.MySchwierigkeitsgradDropDown(m => bewertung.Schwierigkeit)
-            }
+            @bewertung.Schwierigkeit.ToString()
         </div>
         <div class="col-3">
-            @if (isReadOnly)
-            {
-                if (bewertung.Schönheit > 0)
-                {
-                    @: @bewertung.Schönheit
-                }
-            }
-            else
-            {
-                @Html.TextBoxFor(b => bewertung.Schönheit, new { @class = "form-control" })
-            }
+            @(bewertung.Schönheit > 0 ? bewertung.Schönheit.ToString() : "")
         </div>
         <div class="col-3">
-            @if (isReadOnly)
-            {
-                @: @bewertung.Kommentar
-            }
-            else
-            {
-                @Html.TextBoxFor(b => bewertung.Kommentar, new { @class = "form-control" })
-            }
+            @bewertung.Kommentar
         </div>
         <div class="col-4">
-            @if (!isReadOnly)
-            {
-                @Html.SubmitButton(ButtonType.Success, (isNew ? "Bewerten" : "Bewertung ändern"))
-                if (!isNew)
-                {
-                    @Html.LinkButton(ButtonType.Danger,  "Bewertung löschen", "DeleteBewertung", "Route",routeId)
-                }
-            }
+            &nbsp;
         </div>
     </div>
 }
+else
+{
+    using (Ajax.BeginForm("Bewerten", "Route", new { id = routeId },
+                           new AjaxOptions
+                           {
+                               UpdateTargetId = "ajax-form-target-bewertungsliste",
+                           }))
+    {
+        if(!isNew)
+        { @Html.MyValidationSummary();}
+        <div class="row">
+            <div class="col-2">
+                @Html.MySchwierigkeitsgradDropDown(m => bewertung.Schwierigkeit)
+            </div>
+            <div class="col-3">
+                @Html.TextBoxFor(b => bewertung.Schönheit, new { @class = "form-control" })
+            </div>
+            <div class="col-3">
+                @Html.TextBoxFor(b => bewertung.Kommentar, new { @class = "form-control" })
+            </div>
+            <div class="col-4">
+                @Html.SubmitButton(ButtonType.Success, (isNew ? "Bewerten" : "Bewertung ändern"))
+                @if (!isNew)
+                {
+                    @Html.LinkButton(ButtonType.Danger, "Bewertung löschen", "DeleteBewertung", "Route", routeId)
+                }
+            </div>
+        </div>
+    }
+}
+

@@ -5,12 +5,15 @@ using System;
 using Gaswerk.RouteApp.Interfaces.Repositories;
 using Gaswerk.RouteApp.Models;
 
+using JetBrains.Annotations;
+
 namespace Gaswerk.RouteApp.Logic.Repositories
 {
 
     public class KundeRepository : IKundeRepository
     {
         /// <inheritdoc />
+        [CanBeNull]
         public Kunde Get(Login l)
         {
             if (l == null) throw new ArgumentNullException(nameof(l));
