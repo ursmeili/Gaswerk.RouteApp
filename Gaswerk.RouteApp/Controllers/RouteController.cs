@@ -63,6 +63,7 @@ namespace Gaswerk.RouteApp.Controllers
             else
             {
                 bewertung.Kunde = this.CurrentKunde();
+                bewertung.Schwierigkeit = this.SessionData().EditingSchwierigkeit?.Current??bewertung.Schwierigkeit;
                 _RouteRepository.AddOrChangeBewertung(route, bewertung);
 
                 return GetBewertungListData(id, null);

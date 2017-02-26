@@ -41,8 +41,7 @@ namespace Gaswerk.RouteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _AuthorizationProvider.Authenticate(model);
-                var kunde = _KundeRepository.Get(model);
+                var kunde=_AuthorizationProvider.Authenticate(model);
                 if (kunde == null)
                 {
                     ModelState.AddModelError("BadLogin", "Id not known.");

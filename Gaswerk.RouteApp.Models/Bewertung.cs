@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 using JetBrains.Annotations;
 
@@ -100,6 +101,44 @@ namespace Gaswerk.RouteApp.Models
         public static bool operator !=(Schwierigkeit left, Schwierigkeit right)
         {
             return !Equals(left, right);
+        }
+
+        private int GetIndex(Schwierigkeit s)
+        {
+            var ix = 0;
+            foreach (var schwierigkeit in Schwierigkeit.GetSchwierigkeitenArray())
+            {
+                if (schwierigkeit.Equals(s)) return ix;
+
+                ix++;
+            }
+
+            throw new InvalidOperationException();
+        }
+
+        private static Schwierigkeit[] GetSchwierigkeitenArray()
+        {
+            return Schwierigkeit.GetAllSchwierigkeiten().ToArray();
+        }
+
+        public bool CanPrevious() => GetIndex(this) > 0;
+
+        public bool CanNext() => GetIndex(this) < Schwierigkeit.GetAllSchwierigkeiten().Count() - 1;
+
+        public Schwierigkeit Previous()
+        {
+            if(!CanPrevious()) throw new InvalidOperationException();
+
+            return GetSchwierigkeitenArray()[GetIndex(this) - 1];
+
+        }
+
+        public Schwierigkeit Next()
+        {
+            if (!CanNext()) throw new InvalidOperationException();
+
+            return GetSchwierigkeitenArray()[GetIndex(this) + 1];
+
         }
     }
 

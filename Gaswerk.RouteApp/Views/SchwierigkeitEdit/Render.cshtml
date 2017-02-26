@@ -1,0 +1,21 @@
+﻿@model Gaswerk.RouteApp.Models.EditingSchwierigkeitModel
+@{
+    var opt = new AjaxOptions
+    {
+        UpdateTargetId = Model.UpdateTargetId,
+        InsertionMode=InsertionMode.Replace,
+    };
+}
+<div class="btn-group-sm">
+    @if (Model.Current.CanPrevious())
+    {
+        @Ajax.ActionLink("-", "Previous", null, opt, new {@class = "btn btn-outline-danger"});
+    }
+    <span class="text-sm-center" style="display: inline-block;width:50px">
+        @Model.Current.ToString()
+    </span>
+    @if (Model.Current.CanNext())
+    {
+        @Ajax.ActionLink("+", "Next", null, opt, new { @class = "btn btn-outline-success" })
+    }
+</div>

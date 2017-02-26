@@ -18,6 +18,7 @@ namespace Gaswerk.RouteApp.Logic
         public Kunde Kunde { get; set; }
 
         public int IdUser => (Kunde?.Id)??throw new InvalidOperationException("Not logged in");
+        public EditingSchwierigkeitModel EditingSchwierigkeit { get; set; }
 
         public static SessionData GetCurrent(Controller c) => SessionData.GetCurrent(c.Session);
 

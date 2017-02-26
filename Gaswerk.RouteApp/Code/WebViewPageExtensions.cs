@@ -22,6 +22,14 @@ namespace Gaswerk.RouteApp.Code
             return Logic.SessionData.GetCurrent(page.Context.Session);
         }
 
+        [NotNull]
+        public static SessionData SessionData([NotNull] this Controller c)
+        {
+            if (c == null) throw new ArgumentNullException(nameof(c));
+
+            return Logic.SessionData.GetCurrent(c.Session);
+        }
+
         [ContractAnnotation("throwIfNotLoggedIn:true => notnull")]
         [ContractAnnotation("throwIfNotLoggedIn:false => canbenull")]
         public static Kunde CurrentKunde([NotNull] this WebViewPage page, bool throwIfNotLoggedIn = true)
